@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class GenreController extends Controller
 {
     public function index()
     {
-        $genres = [
-            ['id' => 1, 'name' => 'Science Fiction'],
-            ['id' => 2, 'name' => 'Fantasy'],
-            ['id' => 3, 'name' => 'Mystery'],
-            ['id' => 4, 'name' => 'Historical'],
-            ['id' => 5, 'name' => 'Horror'],
-        ];
-
+        $genres = Genre::all();
         return response()->json($genres);
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $genre = Genre::create($validated);
+
+        return response()->json($genre, 201);
     }
 }

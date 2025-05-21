@@ -2,20 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    // Menampilkan semua data author (Read All)
     public function index()
     {
-        $authors = [
-            ['id' => 1, 'name' => 'Agatha Christie'],
-            ['id' => 2, 'name' => 'J.K. Rowling'],
-            ['id' => 3, 'name' => 'Stephen King'],
-            ['id' => 4, 'name' => 'George Orwell'],
-            ['id' => 5, 'name' => 'Tere Liye'],
-        ];
-
+        $authors = Author::all();
         return response()->json($authors);
+    }
+
+    // Menambahkan data author baru (Create)
+    public function store(Request $request)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        // Simpan data ke database
+        $author = Author::create($validated);
+
+        // Kembalikan response JSON dengan status 201 Created
+        return response()->json($author, 201);
     }
 }
