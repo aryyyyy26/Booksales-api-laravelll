@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Author;
+use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
@@ -15,8 +15,7 @@ class AuthorController extends Controller
             ['id' => 4, 'name' => 'George Orwell'],
             ['id' => 5, 'name' => 'Tere Liye'],
         ];
-    
-        return view('authors.index', compact('authors'));
+
+        return response()->json($authors);
     }
-    
 }

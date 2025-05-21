@@ -16,7 +16,6 @@ class GenreController extends Controller
             ['id' => 5, 'name' => 'Horror'],
         ];
 
-        return view('genres.index', compact('genres'));
+        return response()->json($genres);
     }
 }
-
